@@ -15,6 +15,13 @@ namespace organization_notifier
         private string _imageCachePath;
         private string _scriptPath;
         private NotificationParameters _params;
+ 
+        public class IconItem
+        {
+            public string Name { get; set; } = string.Empty;
+            public string Path { get; set; } = string.Empty;
+            public BitmapImage ImageSource { get; set; }
+        }
 
         public MainWindow()
         {
