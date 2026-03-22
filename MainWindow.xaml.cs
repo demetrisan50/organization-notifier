@@ -25,8 +25,8 @@ namespace organization_notifier
 
         public MainWindow()
         {
+            _params = new NotificationParameters(); // Initialize PROMPTLY
             InitializeComponent();
-            _params = new NotificationParameters(); // Initialize before loading UI components
             SetupEnvironment();
             LoadConfig();
             LoadIconDropdown();
@@ -263,6 +263,12 @@ namespace organization_notifier
 
         private bool ValidateForm()
         {
+            // Safety check for early initialization events
+            if (TitleInput == null || MessageInput == null || AppIdInput == null || 
+                TitleError == null || MessageError == null || AppIdError == null ||
+                IconError == null || GenericErrorText == null) 
+                return false;
+
             bool isValid = true;
 
             // Title Validation
