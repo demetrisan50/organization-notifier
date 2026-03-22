@@ -175,6 +175,15 @@ namespace organization_notifier
 
         private void ExecuteButton_Click(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(TitleInput.Text) || 
+                string.IsNullOrWhiteSpace(MessageInput.Text) || 
+                string.IsNullOrWhiteSpace(AppIdInput.Text) || 
+                IconDropdown.SelectedItem == null)
+            {
+                MessageBox.Show("All fields (Title, Message, App ID, and Icon) are mandatory.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
             _params.Title = TitleInput.Text;
             _params.Body = MessageInput.Text;
             _params.Duration = (DurationDropdown.SelectedItem as System.Windows.Controls.ComboBoxItem)?.Content.ToString();
