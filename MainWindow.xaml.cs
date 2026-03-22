@@ -293,43 +293,6 @@ namespace organization_notifier
             return isValid;
         }
 
-        private void LoadIconDropdown()
-        {
-            var icons = new System.Collections.Generic.List<IconItem>();
-            string iconsFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "icons");
-            
-            // For development, also check project root
-            if (!Directory.Exists(iconsFolder))
-            {
-                iconsFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "icons");
-            }
-
-            if (Directory.Exists(iconsFolder))
-            {
-                foreach (var file in Directory.GetFiles(iconsFolder, "*.png"))
-                {
-                    var item = new IconItem
-                    {
-                        Name = Path.GetFileNameWithoutExtension(file),
-                        Path = file,
-                        ImageSource = new BitmapImage(new Uri(file))
-                    };
-                    icons.Add(item);
-                }
-            }
-            IconDropdown.ItemsSource = icons;
-
-            // Select "info" by default if it exists
-            foreach (var item in icons)
-            {
-                if (item.Name.Equals("info", StringComparison.OrdinalIgnoreCase))
-                {
-                    IconDropdown.SelectedItem = item;
-                    break;
-                }
-            }
-        }
-
         private void RunPowerShell()
         {
             try
