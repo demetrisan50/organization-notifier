@@ -19,10 +19,10 @@ namespace organization_notifier
         public MainWindow()
         {
             InitializeComponent();
+            _params = new NotificationParameters(); // Initialize before loading UI components
             SetupEnvironment();
             LoadConfig();
             LoadIconDropdown();
-            _params = new NotificationParameters();
             UserIdentityDisplay.Text = $"Logged in as: {Environment.UserName}";
         }
 
