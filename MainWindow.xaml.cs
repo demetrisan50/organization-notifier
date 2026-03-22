@@ -47,17 +47,21 @@ namespace organization_notifier
 
         private void LoadConfig()
         {
+            AppConfig config = null;
             if (File.Exists(_configFilePath))
             {
                 var content = File.ReadAllText(_configFilePath);
-                var config = JsonConvert.DeserializeObject<AppConfig>(content);
+                config = JsonConvert.DeserializeObject<AppConfig>(content);
                 if (config != null)
                 {
                     _imageCachePath = config.ImageCachePath ?? _imageCachePath;
                     _scriptPath = config.ScriptPath ?? _scriptPath;
                 }
             }
-            else
+            
+            InitializeScenarios(config);
+            
+            if (config == null)
             {
                 SaveConfig();
             }
@@ -68,9 +72,62 @@ namespace organization_notifier
             var config = new AppConfig
             {
                 ImageCachePath = _imageCachePath,
-                ScriptPath = _scriptPath
+                ScriptPath = _scriptPath,
+                Scenarios = _scenarios // Persistence for scenarios
             };
             File.WriteAllText(_configFilePath, JsonConvert.SerializeObject(config, Formatting.Indented));
+        }
+
+        private System.Collections.Generic.List<Scenario> _scenarios;
+
+        private void InitializeScenarios(AppConfig config)
+        {
+            _scenarios = config?.Scenarios ?? new System.Collections.Generic.List<Scenario>();
+            
+            // Ensure 5 slots
+            while (_scenarios.Count < 5)
+            {
+                _scenarios.Add(new Scenario { Name = $"Scenario {_scenarios.Count + 1}" });
+            }
+            ScenariosList.ItemsSource = _scenarios;
+        }
+
+        private void SaveScenario_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is System.Windows.Controls.Button btn && btn.Tag is Scenario scenario)
+            {
+                scenario.Title = TitleInput.Text;
+                scenario.Message = MessageInput.Text;
+                scenario.Duration = (DurationDropdown.SelectedItem as System.Windows.Controls.ComboBoxItem)?.Content.ToString();
+                scenario.AppId = AppIdInput.Text;
+                scenario.IconPath = _params.IconPath;
+                scenario.Name = string.IsNullOrWhiteSpace(scenario.Title) ? "Saved Scenario" : (scenario.Title.Length > 20 ? scenario.Title.Substring(0, 17) + "..." : scenario.Title);
+
+                ScenariosList.Items.Refresh();
+                SaveConfig();
+                Log($"Scenario '{scenario.Name}' saved.");
+            }
+        }
+
+        private void RunScenario_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is System.Windows.Controls.Button btn && btn.Tag is Scenario scenario)
+            {
+                if (string.IsNullOrWhiteSpace(scenario.Title))
+                {
+                    Log("Error: Scenario is empty. Save current settings first.");
+                    return;
+                }
+
+                _params.Title = scenario.Title;
+                _params.Body = scenario.Message;
+                _params.Duration = scenario.Duration;
+                _params.AppId = scenario.AppId;
+                _params.IconPath = scenario.IconPath;
+
+                Log($"Running Scenario: {scenario.Name}");
+                RunPowerShell();
+            }
         }
 
         private void BrowseButton_Click(object sender, RoutedEventArgs e)
