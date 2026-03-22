@@ -1,0 +1,54 @@
+<Window x:Class="organization_notifier.HelpWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2003/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2003/xaml"
+        Title="Documentation & Help" Height="600" Width="500"
+        WindowStartupLocation="CenterOwner"
+        Background="#F5F5F7"
+        FontFamily="Inter, Segoe UI, sans-serif">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Documentation &amp; Setup" FontSize="24" FontWeight="Bold" Foreground="#1D1D1F" Margin="0,0,0,20" />
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <GroupBox Header="1. How to Use" Margin="0,0,0,15" Padding="10" Foreground="#1D1D1F" FontWeight="SemiBold">
+                    <TextBlock TextWrapping="Wrap" Foreground="#424245" FontWeight="Normal">
+                        • Fill in the <Bold>Notification Title</Bold> and <Bold>Message</Bold>.<LineBreak/>
+                        • Select an icon from the dropdown or browse for a custom one.<LineBreak/>
+                        • Click <Bold>Send Notification</Bold> to trigger the alert immediately.<LineBreak/>
+                        • Use <Bold>Quick Scenarios</Bold> at the bottom to save and reuse templates.
+                    </TextBlock>
+                </GroupBox>
+
+                <GroupBox Header="2. Administrator Setup" Margin="0,0,0,15" Padding="10" Foreground="#1D1D1F" FontWeight="SemiBold">
+                    <StackPanel>
+                        <TextBlock Text="To allow PowerShell to run scripts, an administrator must set the execution policy:" TextWrapping="Wrap" Foreground="#424245" FontWeight="Normal" Margin="0,0,0,10" />
+                        <Border Background="#E8E8ED" Padding="10" CornerRadius="4">
+                            <TextBlock Text="Set-ExecutionPolicy RemoteSigned -Scope CurrentUser" FontFamily="Consolas" FontSize="11" Foreground="#1D1D1F" />
+                        </Border>
+                        <TextBlock Text="For remote delivery, ensure WinRM is enabled on target PCs:" TextWrapping="Wrap" Foreground="#424245" FontWeight="Normal" Margin="0,10,0,10" />
+                        <Border Background="#E8E8ED" Padding="10" CornerRadius="4">
+                            <TextBlock Text="Enable-PSRemoting -Force" FontFamily="Consolas" FontSize="11" Foreground="#1D1D1F" />
+                        </Border>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="3. System Prerequisites" Margin="0,0,0,15" Padding="10" Foreground="#1D1D1F" FontWeight="SemiBold">
+                    <TextBlock TextWrapping="Wrap" Foreground="#424245" FontWeight="Normal">
+                        • <Bold>OS</Bold>: Windows 10 (1809+) or Windows 11.<LineBreak/>
+                        • <Bold>Runtime</Bold>: .NET 9.0 Desktop Runtime.<LineBreak/>
+                        • <Bold>PowerShell</Bold>: Version 7.2 or higher highly recommended.<LineBreak/>
+                        • <Bold>Network</Bold>: Active Directory or Workgroup with WinRM enabled for remote toast delivery.
+                    </TextBlock>
+                </GroupBox>
+            </StackPanel>
+        </ScrollViewer>
+
+        <Button Grid.Row="2" Content="Close" Click="CloseButton_Click" HorizontalAlignment="Right" Padding="20,8" Background="#0071E3" Foreground="White" BorderThickness="0" Cursor="Hand" />
+    </Grid>
+</Window>

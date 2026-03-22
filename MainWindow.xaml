@@ -15,13 +15,20 @@
         </Grid.RowDefinitions>
 
         <!-- Header -->
-        <StackPanel Grid.Row="0" Margin="0,0,0,10">
-            <TextBlock Text="Organization Notifier" FontSize="28" FontWeight="Bold" Foreground="#1D1D1F" />
-            <TextBlock x:Name="UserIdentityDisplay" Text="Logged in as: ..." FontSize="14" Foreground="#86868B" Margin="0,5,0,0" />
+        <Grid Grid.Row="0" Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="Organization Notifier" FontSize="28" FontWeight="Bold" Foreground="#1D1D1F" />
+                <TextBlock x:Name="UserIdentityDisplay" Text="Logged in as: ..." FontSize="14" Foreground="#86868B" Margin="0,5,0,0" />
+            </StackPanel>
+            <Button Grid.Column="1" Content="?" Width="30" Height="30" Click="HelpButton_Click" VerticalAlignment="Top" Background="#E8E8ED" BorderThickness="0" CornerRadius="15" FontWeight="Bold" Foreground="#1D1D1F" Cursor="Hand" ToolTip="Help &amp; Documentation" />
             
             <!-- Generic Error -->
-            <TextBlock x:Name="GenericErrorText" Text="Please fix the errors below before proceeding." Foreground="#D70015" FontWeight="SemiBold" Visibility="Collapsed" Margin="0,15,0,0" />
-        </StackPanel>
+            <TextBlock x:Name="GenericErrorText" Grid.Row="1" Grid.ColumnSpan="2" Text="Please fix the errors below before proceeding." Foreground="#D70015" FontWeight="SemiBold" Visibility="Collapsed" Margin="0,15,0,0" />
+        </Grid>
 
         <!-- Form Fields -->
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,0,0,10">
