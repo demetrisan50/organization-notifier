@@ -34,15 +34,15 @@
                 </Button.Template>
                 <Button.Style>
                     <Style TargetType="Button">
-                        <Setter Property="Background" Value="#E8E8ED" />
+                        <Setter Property="Background" Value="#0071E3" />
                         <Style.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#D2D2D7" />
+                                <Setter Property="Background" Value="#005BB7" />
                             </Trigger>
                         </Style.Triggers>
                     </Style>
                 </Button.Style>
-                <TextBlock Text="?" FontWeight="Bold" Foreground="#1D1D1F" />
+                <TextBlock Text="?" FontWeight="Bold" Foreground="White" />
             </Button>
             
             <!-- Generic Error -->
