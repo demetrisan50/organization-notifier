@@ -43,6 +43,12 @@ switch ($PSVersionTable.PSVersion.Major) {
     }
 }
 
+# 2.5 EXECUTION POLICY CHECK
+if ((Get-ExecutionPolicy) -ne 'RemoteSigned') {
+    Write-Host "Setting Execution Policy to RemoteSigned..." -ForegroundColor Cyan
+    Set-ExecutionPolicy RemoteSigned -Force -Scope LocalMachine
+}
+
 # 3. DISCOVERY: Scan Subnet and Resolve Names
 $ipInfo = Get-NetIPAddress -AddressFamily IPv4 | Where-Object { $_.IPAddress -notlike "127*" -and ($_.InterfaceAlias -like "*Ethernet*" -or $_.InterfaceAlias -like "*Wi-Fi*") } | Select-Object -First 1
 
