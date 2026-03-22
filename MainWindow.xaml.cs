@@ -246,7 +246,7 @@ namespace organization_notifier
             _params.AppId = AppIdInput.Text;
 
             RunPowerShell();
-            MessageInput.Clear();
+            // MessageInput.Clear(); // Keep the text so the user can run it multiple times without saving
             SaveConfig();
             ValidateForm(); // Refresh validation after clearing message
         }

@@ -77,22 +77,24 @@
 
                 <!-- Quick Scenarios -->
                 <GroupBox Header="Quick Scenarios (Save/Run)" Margin="0,10,0,0" Padding="10">
-                    <ItemsControl x:Name="ScenariosList">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Margin="0,0,0,8">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center" FontWeight="SemiBold" Foreground="#1D1D1F" />
-                                    <Button Grid.Column="1" Content="Save Current" Click="SaveScenario_Click" Tag="{Binding}" Margin="0,0,8,0" Padding="8,3" Background="#F2F2F7" BorderThickness="0" FontSize="11" Cursor="Hand" />
-                                    <Button Grid.Column="2" Content="Run" Click="RunScenario_Click" Tag="{Binding}" Padding="15,3" Background="#34C759" Foreground="White" FontWeight="Bold" BorderThickness="0" Cursor="Hand" />
-                                </Grid>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
+                    <ScrollViewer MaxHeight="200" VerticalScrollBarVisibility="Auto">
+                        <ItemsControl x:Name="ScenariosList">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,0,0,8">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{Binding Name}" VerticalAlignment="Center" FontWeight="SemiBold" Foreground="#1D1D1F" />
+                                        <Button Grid.Column="1" Content="Save Current" Click="SaveScenario_Click" Tag="{Binding}" Margin="0,0,8,0" Padding="8,3" Background="#F2F2F7" BorderThickness="0" FontSize="11" Cursor="Hand" />
+                                        <Button Grid.Column="2" Content="Run" Click="RunScenario_Click" Tag="{Binding}" Padding="15,3" Background="#34C759" Foreground="White" FontWeight="Bold" BorderThickness="0" Cursor="Hand" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
                 </GroupBox>
             </StackPanel>
         </ScrollViewer>
