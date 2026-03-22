@@ -175,15 +175,13 @@ namespace organization_notifier
 
         private void ExecuteButton_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(TitleInput.Text) || 
-                string.IsNullOrWhiteSpace(MessageInput.Text) || 
-                string.IsNullOrWhiteSpace(AppIdInput.Text) || 
-                IconDropdown.SelectedItem == null)
+            if (!ValidateForm())
             {
-                MessageBox.Show("All fields (Title, Message, App ID, and Icon) are mandatory.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                GenericErrorText.Visibility = Visibility.Visible;
                 return;
             }
 
+            GenericErrorText.Visibility = Visibility.Collapsed;
             _params.Title = TitleInput.Text;
             _params.Body = MessageInput.Text;
             _params.Duration = (DurationDropdown.SelectedItem as System.Windows.Controls.ComboBoxItem)?.Content.ToString();
@@ -192,6 +190,86 @@ namespace organization_notifier
             RunPowerShell();
             MessageInput.Clear();
             SaveConfig();
+            ValidateForm(); // Refresh validation after clearing message
+        }
+
+        private void ValidateInput_Changed(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            ValidateForm();
+        }
+
+        private void ValidateInput_Blur(object sender, RoutedEventArgs e)
+        {
+            ValidateForm();
+        }
+
+        private bool ValidateForm()
+        {
+            bool isValid = true;
+
+            // Title Validation
+            bool isTitleValid = !string.IsNullOrWhiteSpace(TitleInput.Text);
+            TitleError.Visibility = isTitleValid ? Visibility.Collapsed : Visibility.Visible;
+            TitleInput.BorderBrush = isTitleValid ? (System.Windows.Media.Brush)new System.Windows.Media.BrushConverter().ConvertFromString("#D2D2D7") : System.Windows.Media.Brushes.Red;
+            if (!isTitleValid) isValid = false;
+
+            // Message Validation
+            bool isMessageValid = !string.IsNullOrWhiteSpace(MessageInput.Text);
+            MessageError.Visibility = isMessageValid ? Visibility.Collapsed : Visibility.Visible;
+            MessageInput.BorderBrush = isMessageValid ? (System.Windows.Media.Brush)new System.Windows.Media.BrushConverter().ConvertFromString("#D2D2D7") : System.Windows.Media.Brushes.Red;
+            if (!isMessageValid) isValid = false;
+
+            // AppId Validation
+            bool isAppIdValid = !string.IsNullOrWhiteSpace(AppIdInput.Text);
+            AppIdError.Visibility = isAppIdValid ? Visibility.Collapsed : Visibility.Visible;
+            AppIdInput.BorderBrush = isAppIdValid ? (System.Windows.Media.Brush)new System.Windows.Media.BrushConverter().ConvertFromString("#D2D2D7") : System.Windows.Media.Brushes.Red;
+            if (!isAppIdValid) isValid = false;
+
+            // Icon Validation
+            bool isIconValid = IconDropdown.SelectedItem != null || !string.IsNullOrWhiteSpace(_params?.IconPath);
+            IconError.Visibility = isIconValid ? Visibility.Collapsed : Visibility.Visible;
+            if (!isIconValid) isValid = false;
+
+            if (isValid) GenericErrorText.Visibility = Visibility.Collapsed;
+
+            return isValid;
+        }
+
+        private void LoadIconDropdown()
+        {
+            var icons = new System.Collections.Generic.List<IconItem>();
+            string iconsFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "icons");
+            
+            // For development, also check project root
+            if (!Directory.Exists(iconsFolder))
+            {
+                iconsFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "icons");
+            }
+
+            if (Directory.Exists(iconsFolder))
+            {
+                foreach (var file in Directory.GetFiles(iconsFolder, "*.png"))
+                {
+                    var item = new IconItem
+                    {
+                        Name = Path.GetFileNameWithoutExtension(file),
+                        Path = file,
+                        ImageSource = new BitmapImage(new Uri(file))
+                    };
+                    icons.Add(item);
+                }
+            }
+            IconDropdown.ItemsSource = icons;
+
+            // Select "info" by default if it exists
+            foreach (var item in icons)
+            {
+                if (item.Name.Equals("info", StringComparison.OrdinalIgnoreCase))
+                {
+                    IconDropdown.SelectedItem = item;
+                    break;
+                }
+            }
         }
 
         private void RunPowerShell()
