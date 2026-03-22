@@ -141,12 +141,6 @@ namespace organization_notifier
             }
         }
 
-        public class IconItem
-        {
-            public string Name { get; set; } = string.Empty;
-            public string Path { get; set; } = string.Empty;
-            public BitmapImage ImageSource { get; set; }
-        }
 
         private void LoadIconDropdown()
         {
