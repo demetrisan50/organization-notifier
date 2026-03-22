@@ -106,15 +106,26 @@ namespace organization_notifier
             {
                 foreach (var file in Directory.GetFiles(iconsFolder, "*.png"))
                 {
-                    icons.Add(new IconItem
+                    var item = new IconItem
                     {
                         Name = Path.GetFileNameWithoutExtension(file),
                         Path = file,
                         ImageSource = new BitmapImage(new Uri(file))
-                    });
+                    };
+                    icons.Add(item);
                 }
             }
             IconDropdown.ItemsSource = icons;
+
+            // Select "info" by default if it exists
+            foreach (var item in icons)
+            {
+                if (item.Name.Equals("info", StringComparison.OrdinalIgnoreCase))
+                {
+                    IconDropdown.SelectedItem = item;
+                    break;
+                }
+            }
         }
 
         private void IconDropdown_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
@@ -130,6 +141,14 @@ namespace organization_notifier
         {
             try
             {
+                // Use Cache for icons as requested in early steps
+                if (!Directory.Exists(_imageCachePath)) Directory.CreateDirectory(_imageCachePath);
+                
+                string fileName = Path.GetFileName(originalPath);
+                string destinationPath = Path.Combine(_imageCachePath, fileName);
+                
+                // If it's already in cache or we don't need resizing, we can skip complex processing
+                // But the requirement was to resize to 66x66
                 BitmapImage bitmap = new BitmapImage(new Uri(originalPath));
                 int width = 66;
                 int height = 66;
@@ -137,9 +156,6 @@ namespace organization_notifier
                 var resizedImage = new TransformedBitmap(bitmap, new System.Windows.Media.ScaleTransform(
                     (double)width / bitmap.PixelWidth,
                     (double)height / bitmap.PixelHeight));
-
-                string fileName = Path.GetFileName(originalPath);
-                string destinationPath = Path.Combine(_imageCachePath, fileName);
 
                 using (var fileStream = new FileStream(destinationPath, FileMode.Create))
                 {
@@ -179,23 +195,35 @@ namespace organization_notifier
                     return;
                 }
 
-                string arguments = $"-ExecutionPolicy Bypass -File \"{_scriptPath}\" -Title \"{_params.Title}\" -Body \"{_params.Body}\" -Duration \"{_params.Duration}\" -AppId \"{_params.AppId}\" -IconPath \"{_params.IconPath}\"";
+                string executionPolicy = "-ExecutionPolicy Bypass";
+                string arguments = $"{executionPolicy} -File \"{_scriptPath}\" -Title \"{_params.Title}\" -Body \"{_params.Body}\" -Duration \"{_params.Duration}\" -AppId \"{_params.AppId}\" -IconPath \"{_params.IconPath}\"";
+
+                // Load config to check for DebugMode
+                bool isDebug = false;
+                if (File.Exists(_configFilePath))
+                {
+                    var config = JsonConvert.DeserializeObject<AppConfig>(File.ReadAllText(_configFilePath));
+                    if (config != null) isDebug = config.IsDebugMode;
+                }
 
                 ProcessStartInfo startInfo = new ProcessStartInfo()
                 {
                     FileName = "powershell.exe",
-                    Arguments = arguments,
-                    UseShellExecute = false,
-                    RedirectStandardOutput = true,
-                    CreateNoWindow = true
+                    Arguments = isDebug ? $"-NoExit {arguments}" : arguments,
+                    UseShellExecute = isDebug, // UseShellExecute true allows window to show up normally
+                    RedirectStandardOutput = !isDebug,
+                    CreateNoWindow = !isDebug
                 };
 
                 using (Process process = Process.Start(startInfo))
                 {
-                    using (StreamReader reader = process.StandardOutput)
+                    if (!isDebug)
                     {
-                        string result = reader.ReadToEnd();
-                        Log(result);
+                        using (StreamReader reader = process.StandardOutput)
+                        {
+                            string result = reader.ReadToEnd();
+                            Log(result);
+                        }
                     }
                 }
             }
