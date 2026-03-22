@@ -25,7 +25,7 @@ switch ($PSVersionTable.PSVersion.Major) {
             Write-Host "Re-launching in PowerShell 7 as Administrator..." -ForegroundColor Green
             # Re-pass parameters during elevation
             $argList = "-File `"$PSCommandPath`" -Title `"$Title`" -Body `"$Body`" -Duration `"$Duration`" -AppId `"$AppId`" -IconPath `"$IconPath`""
-            Start-Process -FilePath $pwshPath -ArgumentList $argList -Verb RunAs
+            Start-Process -FilePath $pwshPath -ArgumentList $argList -Verb RunAs -WindowStyle Hidden
             exit 
         } else {
             Write-Warning "Upgrade failed. Proceeding with scan in 5.1..."
@@ -37,7 +37,7 @@ switch ($PSVersionTable.PSVersion.Major) {
         if (-not $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
             Write-Host "Elevating PowerShell 7 to Administrator..." -ForegroundColor Green
             $argList = "-File `"$PSCommandPath`" -Title `"$Title`" -Body `"$Body`" -Duration `"$Duration`" -AppId `"$AppId`" -IconPath `"$IconPath`""
-            Start-Process -FilePath $pwshPath -ArgumentList $argList -Verb RunAs
+            Start-Process -FilePath $pwshPath -ArgumentList $argList -Verb RunAs -WindowStyle Hidden
             exit
         }
     }
