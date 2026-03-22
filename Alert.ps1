@@ -44,9 +44,9 @@ switch ($PSVersionTable.PSVersion.Major) {
 }
 
 # 2.5 EXECUTION POLICY CHECK
-if ((Get-ExecutionPolicy) -ne 'RemoteSigned') {
-    Write-Host "Setting Execution Policy to RemoteSigned..." -ForegroundColor Cyan
-    Set-ExecutionPolicy RemoteSigned -Force -Scope LocalMachine
+if ((Get-ExecutionPolicy -Scope CurrentUser) -ne 'RemoteSigned') {
+    Write-Host "Setting Execution Policy to RemoteSigned for CurrentUser..." -ForegroundColor Cyan
+    Set-ExecutionPolicy RemoteSigned -Force -Scope CurrentUser
 }
 
 # 3. DISCOVERY: Scan Subnet and Resolve Names
