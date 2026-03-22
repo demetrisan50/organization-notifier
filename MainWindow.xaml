@@ -24,7 +24,7 @@
                 <TextBlock Text="Organization Notifier" FontSize="28" FontWeight="Bold" Foreground="#1D1D1F" />
                 <TextBlock x:Name="UserIdentityDisplay" Text="Logged in as: ..." FontSize="14" Foreground="#86868B" Margin="0,5,0,0" />
             </StackPanel>
-            <Button Grid.Column="1" Width="30" Height="30" Click="HelpButton_Click" VerticalAlignment="Top" Background="Transparent" BorderThickness="0" Cursor="Hand" ToolTip="Help &amp; Documentation">
+            <Button Grid.Column="1" Width="30" Height="30" Click="HelpButton_Click" VerticalAlignment="Top" BorderThickness="0" Cursor="Hand" ToolTip="Help &amp; Documentation">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Border Background="{TemplateBinding Background}" CornerRadius="15">
