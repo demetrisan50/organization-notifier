@@ -15,18 +15,23 @@
         </Grid.RowDefinitions>
 
         <!-- Header -->
-        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+        <StackPanel Grid.Row="0" Margin="0,0,0,10">
             <TextBlock Text="Organization Notifier" FontSize="28" FontWeight="Bold" Foreground="#1D1D1F" />
             <TextBlock x:Name="UserIdentityDisplay" Text="Logged in as: ..." FontSize="14" Foreground="#86868B" Margin="0,5,0,0" />
+            
+            <!-- Generic Error -->
+            <TextBlock x:Name="GenericErrorText" Text="Please fix the errors below before proceeding." Foreground="#D70015" FontWeight="SemiBold" Visibility="Collapsed" Margin="0,15,0,0" />
         </StackPanel>
 
         <!-- Form Fields -->
         <StackPanel Grid.Row="1">
             <TextBlock Text="Notification Title" Margin="0,0,0,5" Foreground="#1D1D1F" FontWeight="SemiBold" />
-            <TextBox x:Name="TitleInput" Padding="10" Margin="0,0,0,15" BorderThickness="1" BorderBrush="#D2D2D7" />
+            <TextBox x:Name="TitleInput" Padding="10" Margin="0,0,0,2" BorderThickness="1" BorderBrush="#D2D2D7" TextChanged="ValidateInput_Changed" LostFocus="ValidateInput_Blur" />
+            <TextBlock x:Name="TitleError" Text="Title is required" Foreground="#D70015" FontSize="11" Margin="0,0,0,15" Visibility="Collapsed" />
 
             <TextBlock Text="Message" Margin="0,0,0,5" Foreground="#1D1D1F" FontWeight="SemiBold" />
-            <TextBox x:Name="MessageInput" Padding="10" Margin="0,0,0,15" Height="80" TextWrapping="Wrap" AcceptsReturn="True" BorderThickness="1" BorderBrush="#D2D2D7" />
+            <TextBox x:Name="MessageInput" Padding="10" Margin="0,0,0,2" Height="80" TextWrapping="Wrap" AcceptsReturn="True" BorderThickness="1" BorderBrush="#D2D2D7" TextChanged="ValidateInput_Changed" LostFocus="ValidateInput_Blur" />
+            <TextBlock x:Name="MessageError" Text="Message is required" Foreground="#D70015" FontSize="11" Margin="0,0,0,15" Visibility="Collapsed" />
 
             <Grid Margin="0,0,0,15">
                 <Grid.ColumnDefinitions>
@@ -42,12 +47,13 @@
                 </StackPanel>
                 <StackPanel Grid.Column="1" Margin="10,0,0,0">
                     <TextBlock Text="App ID" Margin="0,0,0,5" Foreground="#1D1D1F" FontWeight="SemiBold" />
-                    <TextBox x:Name="AppIdInput" Padding="8" BorderThickness="1" BorderBrush="#D2D2D7" Text="IT Support Team" />
+                    <TextBox x:Name="AppIdInput" Padding="8" BorderThickness="1" BorderBrush="#D2D2D7" Text="IT Support Team" TextChanged="ValidateInput_Changed" LostFocus="ValidateInput_Blur" />
+                    <TextBlock x:Name="AppIdError" Text="App ID is required" Foreground="#D70015" FontSize="11" Margin="0,0,0,0" Visibility="Collapsed" />
                 </StackPanel>
             </Grid>
 
             <TextBlock Text="Icon" Margin="0,0,0,5" Foreground="#1D1D1F" FontWeight="SemiBold" />
-            <Grid Margin="0,0,0,15">
+            <Grid Margin="0,0,0,2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
@@ -59,8 +65,8 @@
                 <ComboBox x:Name="IconDropdown" Grid.Column="1" Width="150" Margin="0,0,10,0" SelectionChanged="IconDropdown_SelectionChanged">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal" Margin="2">
-                                <Image Source="{Binding ImageSource}" Width="20" Height="20" Margin="5,0,10,0" />
+                            <StackPanel Orientation="Horizontal" Padding="5">
+                                <Image Source="{Binding ImageSource}" Width="20" Height="20" Margin="0,0,10,0" />
                                 <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Foreground="#1D1D1F" />
                             </StackPanel>
                         </DataTemplate>
@@ -69,6 +75,7 @@
 
                 <Button Content="Browse" Grid.Column="2" Padding="15,5" Click="BrowseButton_Click" Background="#E8E8ED" BorderThickness="0" Cursor="Hand" />
             </Grid>
+            <TextBlock x:Name="IconError" Text="Icon selection is required" Foreground="#D70015" FontSize="11" Margin="0,0,0,15" Visibility="Collapsed" />
         </StackPanel>
 
         <!-- Log Output -->
