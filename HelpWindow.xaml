@@ -1,7 +1,7 @@
 <Window x:Class="organization_notifier.HelpWindow"
         xmlns="http://schemas.microsoft.com/winfx/2003/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2003/xaml"
-        Title="Documentation & Help" Height="600" Width="500"
+        Title="Documentation &amp; Help" Height="600" Width="500"
         WindowStartupLocation="CenterOwner"
         Background="#F5F5F7"
         FontFamily="Inter, Segoe UI, sans-serif">
