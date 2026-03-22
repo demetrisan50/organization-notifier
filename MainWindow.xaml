@@ -51,9 +51,16 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <TextBox x:Name="IconPathDisplay" Grid.Column="0" Padding="10" IsReadOnly="True" Margin="0,0,10,0" BorderThickness="1" BorderBrush="#D2D2D7" Text="No file selected..." />
-                <Button Content="Browse" Grid.Column="1" Padding="15,5" Click="BrowseButton_Click" Background="#E8E8ED" BorderThickness="0" Cursor="Hand" />
+                
+                <!-- Quick Icon Button -->
+                <Button Grid.Column="1" Click="DefaultIconButton_Click" Margin="0,0,5,0" Padding="5" Background="White" BorderThickness="1" BorderBrush="#D2D2D7" ToolTip="Use Default Warning Icon">
+                    <Image Source="icons/warning.png" Width="24" Height="24" />
+                </Button>
+
+                <Button Content="Browse" Grid.Column="2" Padding="15,5" Click="BrowseButton_Click" Background="#E8E8ED" BorderThickness="0" Cursor="Hand" />
             </Grid>
         </StackPanel>
 

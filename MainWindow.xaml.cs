@@ -83,6 +83,27 @@ namespace organization_notifier
             }
         }
 
+        private void DefaultIconButton_Click(object sender, RoutedEventArgs e)
+        {
+            string defaultIconPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "icons", "warning.png");
+            
+            // Fallback to project root icons folder during development
+            if (!File.Exists(defaultIconPath))
+            {
+                defaultIconPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "icons", "warning.png");
+            }
+
+            if (File.Exists(defaultIconPath))
+            {
+                IconPathDisplay.Text = "Default Warning Icon";
+                ProcessIcon(defaultIconPath);
+            }
+            else
+            {
+                Log("Error: Default icon not found.");
+            }
+        }
+
         private void ProcessIcon(string originalPath)
         {
             try
