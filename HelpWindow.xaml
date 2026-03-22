@@ -1,5 +1,5 @@
 <Window x:Class="organization_notifier.HelpWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2003/xaml/presentation"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2003/xaml"
         Title="Documentation &amp; Help" Height="600" Width="500"
         WindowStartupLocation="CenterOwner"
