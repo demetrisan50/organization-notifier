@@ -59,8 +59,8 @@
                 <ComboBox x:Name="IconDropdown" Grid.Column="1" Width="150" Margin="0,0,10,0" SelectionChanged="IconDropdown_SelectionChanged">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal" Padding="5">
-                                <Image Source="{Binding ImageSource}" Width="20" Height="20" Margin="0,0,10,0" />
+                            <StackPanel Orientation="Horizontal" Margin="2">
+                                <Image Source="{Binding ImageSource}" Width="20" Height="20" Margin="5,0,10,0" />
                                 <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Foreground="#1D1D1F" />
                             </StackPanel>
                         </DataTemplate>
