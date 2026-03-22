@@ -13,5 +13,6 @@ namespace organization_notifier
     {
         public string ImageCachePath { get; set; } = string.Empty;
         public string ScriptPath { get; set; } = string.Empty;
+        public bool IsDebugMode { get; set; } = false;
     }
 }

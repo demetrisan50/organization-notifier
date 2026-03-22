@@ -36,13 +36,13 @@
                 <StackPanel Grid.Column="0" Margin="0,0,10,0">
                     <TextBlock Text="Duration" Margin="0,0,0,5" Foreground="#1D1D1F" FontWeight="SemiBold" />
                     <ComboBox x:Name="DurationDropdown" Padding="5">
-                        <ComboBoxItem Content="Short" IsSelected="True" />
-                        <ComboBoxItem Content="Long" />
+                        <ComboBoxItem Content="Short" />
+                        <ComboBoxItem Content="Long" IsSelected="True" />
                     </ComboBox>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Margin="10,0,0,0">
                     <TextBlock Text="App ID" Margin="0,0,0,5" Foreground="#1D1D1F" FontWeight="SemiBold" />
-                    <TextBox x:Name="AppIdInput" Padding="8" BorderThickness="1" BorderBrush="#D2D2D7" Text="Organization Notifier" />
+                    <TextBox x:Name="AppIdInput" Padding="8" BorderThickness="1" BorderBrush="#D2D2D7" Text="IT Support Team" />
                 </StackPanel>
             </Grid>
 
