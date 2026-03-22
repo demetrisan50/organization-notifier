@@ -33,6 +33,13 @@ namespace organization_notifier
             UserIdentityDisplay.Text = $"Logged in as: {Environment.UserName}";
         }
 
+        private void HelpButton_Click(object sender, RoutedEventArgs e)
+        {
+            HelpWindow helpWin = new HelpWindow();
+            helpWin.Owner = this;
+            helpWin.ShowDialog();
+        }
+
         private void SetupEnvironment()
         {
             _appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Roaming", "NotificationApp");
