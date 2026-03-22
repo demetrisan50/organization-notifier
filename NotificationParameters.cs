@@ -4,7 +4,7 @@ namespace organization_notifier
     {
         public string Title { get; set; } = "Notification";
         public string Body { get; set; } = "Message content";
-        public string Duration { get; set; } = "Short"; // Short or Long
+        public string Duration { get; set; } = "Long"; // Short or Long
         public string AppId { get; set; } = "Organization Notifier";
         public string IconPath { get; set; } = string.Empty;
     }
