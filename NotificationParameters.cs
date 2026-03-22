@@ -6,7 +6,7 @@ namespace organization_notifier
         public string Body { get; set; } = "Message content";
         public string Duration { get; set; } = "Long"; // Short or Long
         public string AppId { get; set; } = "Organization Notifier";
-        public string IconPath { get; set; } = string.Empty;
+        public string IconPath { get; set; } = "C:\\Windows\\System32\\alert.png";
     }
 
     public class AppConfig

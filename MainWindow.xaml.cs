@@ -136,7 +136,7 @@ namespace organization_notifier
                     return;
                 }
 
-                string arguments = $"-File \"{_scriptPath}\" -Title \"{_params.Title}\" -Body \"{_params.Body}\" -Duration \"{_params.Duration}\" -AppId \"{_params.AppId}\" -IconPath \"{_params.IconPath}\"";
+                string arguments = $"-ExecutionPolicy Bypass -File \"{_scriptPath}\" -Title \"{_params.Title}\" -Body \"{_params.Body}\" -Duration \"{_params.Duration}\" -AppId \"{_params.AppId}\" -IconPath \"{_params.IconPath}\"";
 
                 ProcessStartInfo startInfo = new ProcessStartInfo()
                 {
