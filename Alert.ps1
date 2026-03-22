@@ -125,7 +125,7 @@ if ($liveComputers.Count -gt 0) {
             Write-Host "Sending alert on $thisPC via $appId..." -ForegroundColor Green
             [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier($appId).Show($toast)
         } catch {
-            Write-Error "Failed to send notification on $thisPC: $($_.Exception.Message)"
+            Write-Error "Failed to send notification on ${thisPC}: $($_.Exception.Message)"
         }
     } -ErrorAction SilentlyContinue
 }
