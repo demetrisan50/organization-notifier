@@ -21,6 +21,7 @@ namespace organization_notifier
             InitializeComponent();
             SetupEnvironment();
             LoadConfig();
+            LoadIconDropdown();
             _params = new NotificationParameters();
             UserIdentityDisplay.Text = $"Logged in as: {Environment.UserName}";
         }
@@ -83,24 +84,45 @@ namespace organization_notifier
             }
         }
 
-        private void DefaultIconButton_Click(object sender, RoutedEventArgs e)
+        public class IconItem
         {
-            string defaultIconPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "icons", "warning.png");
+            public string Name { get; set; } = string.Empty;
+            public string Path { get; set; } = string.Empty;
+            public BitmapImage ImageSource { get; set; }
+        }
+
+        private void LoadIconDropdown()
+        {
+            var icons = new System.Collections.Generic.List<IconItem>();
+            string iconsFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "icons");
             
-            // Fallback to project root icons folder during development
-            if (!File.Exists(defaultIconPath))
+            // For development, also check project root
+            if (!Directory.Exists(iconsFolder))
             {
-                defaultIconPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "icons", "warning.png");
+                iconsFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "icons");
             }
 
-            if (File.Exists(defaultIconPath))
+            if (Directory.Exists(iconsFolder))
             {
-                IconPathDisplay.Text = "Default Warning Icon";
-                ProcessIcon(defaultIconPath);
+                foreach (var file in Directory.GetFiles(iconsFolder, "*.png"))
+                {
+                    icons.Add(new IconItem
+                    {
+                        Name = Path.GetFileNameWithoutExtension(file),
+                        Path = file,
+                        ImageSource = new BitmapImage(new Uri(file))
+                    });
+                }
             }
-            else
+            IconDropdown.ItemsSource = icons;
+        }
+
+        private void IconDropdown_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (IconDropdown.SelectedItem is IconItem selectedIcon)
             {
-                Log("Error: Default icon not found.");
+                IconPathDisplay.Text = selectedIcon.Name;
+                ProcessIcon(selectedIcon.Path);
             }
         }
 
