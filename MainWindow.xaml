@@ -16,7 +16,7 @@
             </Grid.RowDefinitions>
 
             <!-- Header -->
-            <Grid Grid.Row="0" Margin="0,0,0="10">
+            <Grid Grid.Row="0" Margin="0,0,0,10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
@@ -51,7 +51,7 @@
             </Grid>
 
             <!-- Form Fields -->
-            <StackPanel Grid.Row="1">
+            <StackPanel Grid.Row="1" Margin="0,0,0,10">
                 <TextBlock Text="Notification Title" Margin="0,0,0,5" Foreground="#1D1D1F" FontWeight="SemiBold" />
                 <TextBox x:Name="TitleInput" Padding="10" Margin="0,0,0,2" BorderThickness="1" BorderBrush="#D2D2D7" TextChanged="ValidateInput_Changed" LostFocus="ValidateInput_Blur" />
                 <TextBlock x:Name="TitleError" Text="Title is required" Foreground="#D70015" FontSize="11" Margin="0,0,0,15" Visibility="Collapsed" />
